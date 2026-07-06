@@ -1,6 +1,6 @@
 import pytest
 from pages import checkbox_page
-from core.assertions import is_checkbox_selected
+
 
 @pytest.mark.usefixtures("open_url")
 class TestCheckboxPage:
@@ -11,6 +11,6 @@ class TestCheckboxPage:
     def test_select_all_checkboxes(self, driver):
         checkbox = checkbox_page.CheckboxPage(driver)
         checkbox.select_all_checkboxes()
-        assert checkbox.is_checkbox_selected(checkbox.LOCATORS["OPTION_A"])
-        assert checkbox.is_checkbox_selected(checkbox.LOCATORS["OPTION_B"])
-        assert checkbox.is_checkbox_selected(checkbox.LOCATORS["OPTION_C"])
+        assert checkbox.is_checkbox_selected("OPTION_A")
+        assert checkbox.is_checkbox_selected("OPTION_B")
+        assert checkbox.is_checkbox_selected("OPTION_C")

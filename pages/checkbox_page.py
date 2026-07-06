@@ -1,6 +1,6 @@
 from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.common.by import By
-from core.wait_helpers import WaitHelpers
+from core.actions import Actions
 from pages.base_page import BasePage
 
 
@@ -17,19 +17,19 @@ class CheckboxPage(BasePage):
                  }
     
     def __init__(self, driver):
-        super().__init__(driver)
-        self.wait_helpers = WaitHelpers(driver)
+        super().__init__(driver)      # inherits the Basepage constructor and initializes the driver, wait_helpers, and actions attributes
+        
         
     def get_title(self) -> str:
-        title_element = self.wait_helpers.wait_for_visible(self.LOCATORS["TITLE"])
-        return title_element.text 
+        title_element = self.actions.get_text(self.LOCATORS["TITLE"])
+        return title_element
+    
     def select_all_checkboxes(self) -> None:
-        checkbox_section = self.wait_helpers.wait_for_visible(self.LOCATORS["CHECKBOX_SECTION"])
-        checkbox_section.click()
-        select_all = self.wait_helpers.wait_for_visible(self.LOCATORS["SELECT_ALL_CHECKBOX"])
-        select_all.click()
+        self.actions.perform_click(self.LOCATORS["CHECKBOX_SECTION"])
         
-    def is_checkbox_selected(self, locator: WebElement) -> bool:
-        checkbox = self.wait_helpers.wait_for_visible(locator)
-        return checkbox.is_selected()    
+        self.actions.perform_click(self.LOCATORS["SELECT_ALL_CHECKBOX"])
+        
+        
+    def is_checkbox_selected(self, name: str) -> bool:
+        return self.actions.is_checkbox_selected(self.LOCATORS[name])   
         
