@@ -67,3 +67,11 @@ class Actions:
             return True
         except Exception:
             return False    
+        
+    def perform_hover(self, locator):
+        # Implementation for performing hover actions
+        self.logger.info(f"Hovering over {locator}")
+        element = self.wait_helpers.wait_for_visible(locator)
+        self.action_chains.move_to_element(element).perform()   
+        
+        

@@ -1,20 +1,35 @@
-import config 
-from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
 
-# Driver factory owns the driver creation from the values of config browser
+from selenium import webdriver
+from config.config import config as app_config
+
 
 class DriverFactory:
-    def __init__(self,config):
-        self.config = config
-        
+    def __init__(self, cfg):
+        self.config = cfg
+
     def get_browser(self):
         return self.config["browser"]
-    
+
     def create_driver(self):
-        if (self.config["browser"] == "Chrome"): 
-           return webdriver.chrome()   
-        elif (self.config["browser"] == "FireFox"):
-            return webdriver.firefox()
-  
-factory = DriverFactory(config)    
-        
+        print(type(self.config))
+        print(self.config)
+        if self.config["browser"] == "Chrome":
+            
+            options = Options()
+
+            if self.config.get("headless", True):
+               options.add_argument("--headless")
+            options.add_argument("--start-maximized")
+            return webdriver.Chrome(options=options)
+
+        elif self.config["browser"] == "Firefox":
+            return webdriver.Firefox()
+        else:
+            raise ValueError(
+                f"Unsupported browser: {self.config['browser']}"
+            )
+
+
+factory = DriverFactory(app_config)
+

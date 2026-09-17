@@ -4,6 +4,8 @@ from utils.logger import Logger
 logger = Logger() 
 
 @pytest.mark.usefixtures("open_url")
+@pytest.mark.regression
+
 class TestButtonPage:
     def test_button_page_title(self, driver):
         button = button_page.ButtonPage(driver)

@@ -1,0 +1,57 @@
+name: UI Automation
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+
+  smoke-tests:
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run Smoke Tests
+        run: |
+          pytest -m smoke \
+          --html=smoke_report.html \
+          --self-contained-html
+  regression-tests:
+
+    runs-on: ubuntu-latest
+
+    needs: smoke-tests
+
+    steps:
+
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run Regression Tests
+        run: |
+          pytest -m regression \
+          --html=regression_report.html \
+          --self-contained-html
+
+
