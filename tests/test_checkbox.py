@@ -5,7 +5,6 @@ from utils.logger import Logger
 logger = Logger() # tests does not inherit from BasePage, so we need to create a logger instance here
 
 
-@pytest.mark.regression
 @pytest.mark.usefixtures("open_url")
 class TestCheckboxPage:
     def test_checkbox_page_title(self, driver):
