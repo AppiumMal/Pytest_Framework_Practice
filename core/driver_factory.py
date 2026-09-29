@@ -18,8 +18,11 @@ class DriverFactory:
             
             options = Options()
 
-            if self.config.get("headless", False):
-               options.add_argument("--headless")
+            if self.config.get("headless", True):
+               options.add_argument("--headless=new")
+            options.add_argument("--no-sandbox")
+            options.add_argument("--disable-dev-shm-usage")
+            options.add_argument("--window-size=1920,1080")
             options.add_argument("--start-maximized")
             return webdriver.Chrome(options=options)
 
