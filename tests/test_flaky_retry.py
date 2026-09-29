@@ -12,6 +12,7 @@ def test_flaky_retry(driver):
     assert flaky_retry.get_title() == "Section 25: Random Fail (Flaky) Elements"
     
 @pytest.mark.usefixtures("open_url")
+@pytest.mark.smoke
 def test_click_flaky_retry_button_and_verify_message(driver):  
     flaky_retry=flaky_retry_page.FlakyRetryPage(driver)  
     logger.info("Clicking on the Flaky Retry button")   

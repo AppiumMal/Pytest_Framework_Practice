@@ -1,5 +1,5 @@
 # Ignore a specific file
-*__pycache__/*
+__pycache__/
 *.py[cod]
 .pytest_cache/
 logs/selenium_tests.log

@@ -6,6 +6,7 @@ logger = Logger() # tests does not inherit from BasePage, so we need to create a
 
 
 @pytest.mark.usefixtures("open_url")
+@pytest.mark.smoke
 def test_checkbox_page_title(self, driver):
         checkbox = checkbox_page.CheckboxPage(driver)
         logger.info("Verifying the title of the checkbox page")
