@@ -7,7 +7,7 @@ from core.assertions import assert_text_contains
 
 class TestHoverPage:
     
-    @pytest.mark.smoke
+    
     def test_hover_page_title(self, driver):
         hover = hover_page.HoverPage(driver)
         assert_text_contains(hover.get_title(), "Hover")
