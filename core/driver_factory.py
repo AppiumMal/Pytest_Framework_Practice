@@ -18,7 +18,7 @@ class DriverFactory:
             
             options = Options()
 
-            if self.config.get("headless", True):
+            if self.config.get("headless", False):
                options.add_argument("--headless")
             options.add_argument("--start-maximized")
             return webdriver.Chrome(options=options)

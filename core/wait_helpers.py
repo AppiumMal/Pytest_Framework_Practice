@@ -16,6 +16,11 @@ class WaitHelpers:
         
     def wait_for_visible(self, locator):
         return self.wait.until(EC.visibility_of_element_located(locator))
+    
+    def wait_for_all_visible(self, locator):
+        return self.wait.until(
+        EC.visibility_of_all_elements_located(locator)
+    )
 
     def wait_for_clickable(self, locator,timeout=None):
         return self.wait.until(EC.element_to_be_clickable(locator))

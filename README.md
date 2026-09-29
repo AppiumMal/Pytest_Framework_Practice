@@ -28,6 +28,12 @@
 
 10. The pipeline status is marked as Passed or Failed.
 
+Test execution also writes a JSON metadata file for each completed test under
+`test-artifacts/`. Failed UI tests include a screenshot when a WebDriver is
+available. When pytest-html is enabled, test metadata and screenshots are
+attached to the HTML report; CI uploads the HTML report and artifact directory
+even when tests fail.
+
 test_valid_login - @pytest.mark.smoke
 test_invalid_login - @pytest.mark.regression
 test_button_page_title - @pytest.mark.regression

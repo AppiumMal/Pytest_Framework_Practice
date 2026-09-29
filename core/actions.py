@@ -74,4 +74,27 @@ class Actions:
         element = self.wait_helpers.wait_for_visible(locator)
         self.action_chains.move_to_element(element).perform()   
         
+    def find_elements(self, locator):
+        # Implementation for finding multiple elements
+        elements = self.wait_helpers.wait_for_all_visible(locator)
+        return elements    
+    
+    def retry_action(self, action, max_attempts=3):
+        last_exception = None
+
+        for attempt in range(1, max_attempts + 1):
+            try:
+                result = action()
+                self.logger.info(f"Action succeeded on attempt {attempt}")
+                return result
+            except Exception as ex:
+                self.logger.warning(
+                    f"Attempt {attempt}/{max_attempts} failed : {ex}"
+                )
+                last_exception = ex
+
+        raise RuntimeError(
+            f"Action failed after {max_attempts} attempts"
+        ) from last_exception
+        
         

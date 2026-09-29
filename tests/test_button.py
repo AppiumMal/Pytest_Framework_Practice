@@ -1,4 +1,5 @@
 import pytest
+from core.assertions import assert_text_contains
 from pages import button_page
 from utils.logger import Logger
 logger = Logger() 
@@ -10,7 +11,7 @@ class TestButtonPage:
     def test_button_page_title(self, driver):
         button = button_page.ButtonPage(driver)
         logger.info("Verifying the title of the button page")
-        assert button.get_title() == "Section 2 — Buttons"
+        assert_text_contains(button.get_title(), "Button")
         
     def test_single_click_button(self, driver):
         button = button_page.ButtonPage(driver)

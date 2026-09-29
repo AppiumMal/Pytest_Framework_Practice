@@ -1,50 +1,34 @@
 import logging
+from pathlib import Path
+from venv import logger
 
 class Logger:
 
-    def __init__(self, name =__name__):
-        logging.basicConfig(
-            level=logging.INFO,
-            format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
-        )
+    def __init__(self, name=__name__):
+
         self.logger = logging.getLogger(name)
+        self.logger.setLevel(logging.INFO)
+        self.logger.setLevel(logging.WARNING)
 
-    def debug(self, message):
-        self.logger.debug(message)
+        if not self.logger.handlers:
 
-    def info(self, message):
-        self.logger.info(message)
+            Path("logs").mkdir(exist_ok=True)
 
-    def warning(self, message):
-        self.logger.warning(message)
+            file_handler = logging.FileHandler(
+                "logs/selenium_tests.log",
+                encoding="utf-8"
+            )
 
-    def error(self, message):
-        self.logger.error(message)
+            formatter = logging.Formatter(
+                "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+            )
 
-    def critical(self, message):
-        self.logger.critical(message)
+            file_handler.setFormatter(formatter)
+
+            self.logger.addHandler(file_handler)
+
+    def info(self, msg):
+        self.logger.info(msg)
         
-logging.basicConfig(
-    filename="framework.log",
-    level=logging.INFO,
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
-)
-    
-
-#Cheatsheet for using logger in different files:
-""" logger.py
-    creates logger object
-
-BasePage
-    self.logger = logger
-
-CheckboxPage
-    self.logger.info(...)
-
-Tests
-    import logger
-    logger.info(...) """
-    
-   #Logger to write logs to a file
-   
-   
+    def warning(self, msg):
+        self.logger.warning(msg)    

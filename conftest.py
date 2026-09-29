@@ -4,9 +4,41 @@
 # └─ PyTest Hooks -reacts to Pytest events,used by pytest itself,modifies execution,eg.capture screenshot on failure.
 
 import pytest
+from selenium.common.exceptions import WebDriverException
+from utils.report_manager import ReportManager
 from utils.config_loader import ConfigLoader
 from core.driver_factory import DriverFactory
 from config.config import config as app_config
+
+
+@pytest.hookimpl(hookwrapper=True)
+def pytest_runtest_makereport(item, call):
+    outcome = yield
+    report = outcome.get_result()
+    if report.when != "call" and not report.failed:
+        return
+
+    manager = ReportManager()
+    driver = item.funcargs.get("driver")
+    screenshot_path = None
+    screenshot_error = None
+
+    if report.failed and driver is not None:
+        try:
+            screenshot_path = manager.capture_screenshot(driver, item.nodeid)
+        except (OSError, WebDriverException) as error:
+            screenshot_error = f"{type(error).__name__}: {error}"
+            manager.logger.exception(
+                "Could not capture screenshot for %s", item.nodeid
+            )
+
+    manager.create_test_artifact(
+        item,
+        report,
+        screenshot_path,
+        screenshot_error,
+        item.config.pluginmanager.hasplugin("html"),
+    )
 
 
 @pytest.fixture(scope="function")
