@@ -28,8 +28,8 @@ class CheckboxPage(BasePage):
     
     def select_all_checkboxes(self) -> None:
         
-        self.logger.warning("Checkbox section is not visible, clicking on the checkbox section to make it visible")
-        self.actions.perform_click(self.LOCATORS["CHECKBOX_SECTION"])
+        #self.logger.warning("Checkbox section is not visible, clicking on the checkbox section to make it visible")
+        #self.actions.perform_click(self.LOCATORS["CHECKBOX_SECTION"])
         
         self.logger.warning("Clicking on the select all checkbox to select all checkboxes")
         self.actions.perform_click(self.LOCATORS["SELECT_ALL_CHECKBOX"])
