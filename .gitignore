@@ -1,0 +1,11 @@
+# Ignore a specific file
+__pycache__/
+*.py[cod]
+.pytest_cache/
+logs/selenium_tests.log
+screenshots/
+visual_architect_diagram_edited.png
+assets/visual_architect_diagram_edited.png
+.vscode/
+venv314/
+venv*/
